@@ -39,14 +39,14 @@
    
     <div class="container mt-5">
         <div class="text-center">
-            <h1 class="fw-bold mb-4">Üdvözöl a MoziDB!</h1>
+            <h1 class="fw-bold mb-4">Üdvözlünk a mozis oldalunkon!</h1>
             <p class="lead">
                 Ez az oldal a magyar mozik és filmvetítések világát mutatja be.
                 Megtekintheted az aktuális előadásokat, böngészhetsz a filmek között,
                 és akár saját bejegyzéseket is létrehozhatsz az admin felületen.
             </p>
             <a href="/eloadasok" class="btn btn-primary btn-lg mt-3">
-                🎬 Előadások megtekintése
+                Előadások megtekintése
             </a>
         </div>
 
