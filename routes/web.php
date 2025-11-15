@@ -47,24 +47,26 @@ Route::get('/eloadasok', function () {
     return view('pages.eloadasok', ['adatok' => $adatok]);
 });
 
-// rekord törlése
+// Rekord törlése
 Route::get('/filmek/{film}/delete', [FilmController::class, 'destroy'])
      ->name('filmek.delete');
 
-     //rekord update
+     //Rekord update
 
      Route::resource('filmek', FilmController::class)->parameters([
     'filmek' => 'film'
 ]);
 
 
-/* -----------------------------
-   CRUD – FILMEK
-   /filmek
------------------------------- */
+
 Route::resource('filmek', \App\Http\Controllers\FilmController::class);
 
+// Autentikációhoz
+Route::get('/auth', function () {
+    return view('pages.auth');
+})->name('auth.page');
 
+require __DIR__.'/auth.php';
 /* -----------------------------
    KAPCSOLAT (később kerül megírásra)
 ------------------------------ */
@@ -88,4 +90,7 @@ Route::resource('filmek', \App\Http\Controllers\FilmController::class);
    ADMIN MENÜ (később role=admin middleware)
 ------------------------------ */
 // Route::get('/admin', [...]);
+
+require __DIR__.'/settings.php'; 
+require __DIR__.'/auth.php'; 
 

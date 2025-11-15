@@ -34,21 +34,34 @@
                     <a class="nav-link" href="{{ url('/') }}">Főoldal</a>
                 </li>
 
-                <!-- Filmek listája (előadások) -->
+                <!-- Filmek listája -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/eloadasok') }}">Filmek listája</a>
                 </li>
 
-                <!-- CRUD – Filmek -->
+                <!-- CRUD -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('filmek.index') }}">CRUD </a>
                 </li>
 
                 <!-- Autentikáció -->
-                <a class="nav-link" href="{{ route('auth.page') }}">Autentikáció</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/auth') }}">Autentikáció</a>
+                </li>
 
+                @auth
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button class="btn btn-link nav-link">Kijelentkezés</button>
+                        </form>
+                    </li>
+                @endauth
 
-                
+                @guest
+                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Bejelentkezés</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Regisztráció</a></li>
+                @endguest
 
             </ul>
         </div>
