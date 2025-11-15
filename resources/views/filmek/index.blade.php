@@ -36,13 +36,14 @@
                         <a href="{{ route('filmek.edit', $film->id) }}" class="btn btn-sm btn-warning">Szerkesztés</a>
 
                         <form action="{{ route('filmek.destroy', $film->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger"
-                                onclick="return confirm('Biztosan törölni szeretnéd ezt a filmet?')">
-                                Törlés
-                            </button>
-                        </form>
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-danger btn-sm"
+        onclick="return confirm('Biztosan törölni szeretnéd ezt a filmet?')">
+        Törlés
+    </button>
+</form>
+
                     </td>
                 </tr>
             @endforeach

@@ -18,19 +18,20 @@ class FilmController extends Controller
         return view('filmek.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'cim' => 'required|string|max:255',
-            'ev' => 'required|integer',
-            'hossz' => 'required|integer',
-        ]);
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'cim' => 'required|string|max:255',
+        'ev' => 'required|integer',
+        'hossz' => 'required|integer',
+    ]);
 
-        Film::create($request->all());
+    Film::create($validated);
 
-        return redirect()->route('filmek.index')
-                         ->with('success', 'Film sikeresen hozzáadva!');
-    }
+    return redirect()->route('filmek.index')
+                     ->with('success', 'Film sikeresen hozzáadva!');
+}
+
 
     public function edit(Film $film)
     {
@@ -51,11 +52,12 @@ class FilmController extends Controller
                          ->with('success', 'Film frissítve!');
     }
 
-    public function destroy(Film $film)
-    {
-        $film->delete();
+   public function destroy(Film $film)
+{
+    $film->delete();
 
-        return redirect()->route('filmek.index')
-                         ->with('success', 'Film törölve!');
-    }
+    return redirect()->route('filmek.index')
+                     ->with('success', 'Film törölve!');
+}
+
 }
