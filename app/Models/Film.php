@@ -9,9 +9,13 @@ class Film extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['cim', 'ev', 'hossz'];
+    protected $table = 'film'; // fontos, ha nem "films" a táblanév!
 
-    public function eloadasok() {
-        return $this->hasMany(Eloadas::class, 'filmid');
-    }
+    protected $fillable = [
+        'cim',
+        'ev',
+        'hossz',
+    ];
+
+    public $timestamps = false; // mert a film táblában nincs created_at / updated_at
 }

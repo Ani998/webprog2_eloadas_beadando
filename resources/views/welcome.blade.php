@@ -28,8 +28,9 @@
                         <a class="nav-link" href="/kapcsolat">Kapcsolat</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/crud">CRUD</a>
+                        <a class="nav-link" href="/filmek">CRUD</a>
                     </li>
+                    
                 </ul>
             </div>
         </div>

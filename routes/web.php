@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\FilmController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,5 +26,17 @@ Route::get('/eloadasok', function () {
         ->orderBy('eloadas.datum', 'desc')
         ->get();
 
+
+
     return view('eloadasok', ['adatok' => $adatok]);
 });
+
+
+
+
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::resource('filmek', FilmController::class);
