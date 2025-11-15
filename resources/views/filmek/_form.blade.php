@@ -26,5 +26,3 @@
         <div class="text-danger">{{ $message }}</div>
     @enderror
 </div>
-
-<button type="submit" class="btn btn-success">{{ $buttonText }}</button>

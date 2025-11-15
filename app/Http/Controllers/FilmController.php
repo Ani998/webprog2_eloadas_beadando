@@ -18,46 +18,44 @@ class FilmController extends Controller
         return view('filmek.create');
     }
 
-public function store(Request $request)
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'cim' => 'required|string|max:255',
+            'ev' => 'required|integer|min:1900|max:' . date('Y'),
+            'hossz' => 'required|integer|min:1|max:600',
+        ]);
+
+        Film::create($validated);
+
+        return redirect()->route('filmek.index')->with('success', 'Film sikeresen felvéve!');
+    }
+
+  public function edit(Film $film)
+{
+    return view('filmek.edit', compact('film'));
+}
+
+public function update(Request $request, Film $film)
 {
     $validated = $request->validate([
         'cim' => 'required|string|max:255',
-        'ev' => 'required|integer',
-        'hossz' => 'required|integer',
+        'ev' => 'required|integer|min:1900|max:' . date('Y'),
+        'hossz' => 'required|integer|min:1|max:600',
     ]);
 
-    Film::create($validated);
+    
 
-    return redirect()->route('filmek.index')
-                     ->with('success', 'Film sikeresen hozzáadva!');
+    $film->update($validated);
+
+    return redirect()->route('filmek.index')->with('success', 'Film frissítve!');
 }
 
 
-    public function edit(Film $film)
+    public function destroy(Film $film)
     {
-        return view('filmek.edit', compact('film'));
+        $film->delete();
+
+        return redirect()->route('filmek.index')->with('success', 'Film törölve!');
     }
-
-    public function update(Request $request, Film $film)
-    {
-        $request->validate([
-            'cim' => 'required|string|max:255',
-            'ev' => 'required|integer',
-            'hossz' => 'required|integer',
-        ]);
-
-        $film->update($request->all());
-
-        return redirect()->route('filmek.index')
-                         ->with('success', 'Film frissítve!');
-    }
-
-   public function destroy(Film $film)
-{
-    $film->delete();
-
-    return redirect()->route('filmek.index')
-                     ->with('success', 'Film törölve!');
-}
-
 }

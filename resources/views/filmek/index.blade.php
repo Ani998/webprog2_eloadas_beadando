@@ -1,20 +1,19 @@
 @extends('layouts.app')
 
+@section('title', 'Filmek')
+
 @section('content')
 <div class="container mt-4">
-    <h1 class="mb-4">🎬 Filmek</h1>
 
-    {{-- Sikerüzenet --}}
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            {{ $message }}
-        </div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Filmek</h1>
+        <a href="{{ route('filmek.create') }}" class="btn btn-success">+ Új film hozzáadása</a>
+    </div>
+
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    {{-- Új film gomb --}}
-    <a href="{{ route('filmek.create') }}" class="btn btn-primary mb-3">+ Új film hozzáadása</a>
-
-    {{-- Filmek táblázata --}}
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
             <tr>
@@ -33,21 +32,20 @@
                     <td>{{ $film->ev }}</td>
                     <td>{{ $film->hossz }}</td>
                     <td>
-                        <a href="{{ route('filmek.edit', $film->id) }}" class="btn btn-sm btn-warning">Szerkesztés</a>
+                        <a href="{{ route('filmek.edit', $film) }}"
+                           class="btn btn-primary btn-sm">Szerkesztés</a>
 
-                        <form action="{{ route('filmek.destroy', $film->id) }}" method="POST" style="display:inline-block;">
-    @csrf
-    @method('DELETE')
-    <button type="submit" class="btn btn-danger btn-sm"
-        onclick="return confirm('Biztosan törölni szeretnéd ezt a filmet?')">
-        Törlés
-    </button>
-</form>
+                      <a href="{{ route('filmek.delete', $film) }}"
+   class="btn btn-danger btn-sm"
+   onclick="return confirm('Biztosan törölni szeretnéd ezt a filmet?')">
+    Törlés
+</a>
 
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
 </div>
 @endsection

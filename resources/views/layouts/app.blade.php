@@ -3,18 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmek CRUD</title>
+    <title>@yield('title', 'MoziDB')</title>
+
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a href="{{ route('filmek.index') }}" class="navbar-brand">Filmek CRUD</a>
-        </div>
-    </nav>
 
-    <div class="container mt-4">
-        @yield('content')
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+
+        <!-- Logo -->
+        <a class="navbar-brand fw-bold" href="{{ url('/') }}">
+            🎬 MoziDB
+        </a>
+
+        <!-- Hamburger gomb mobilon -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menü -->
+        <div class="collapse navbar-collapse" id="navbarMenu">
+            <ul class="navbar-nav ms-auto">
+
+                <!-- Főoldal -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/') }}">Főoldal</a>
+                </li>
+
+                <!-- Filmek listája (előadások) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/eloadasok') }}">Filmek listája</a>
+                </li>
+
+                <!-- CRUD – Filmek -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('filmek.index') }}">CRUD </a>
+                </li>
+
+                <!-- Kapcsolat -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/kapcsolat') }}">Autentikáció</a>
+                </li>
+
+            </ul>
+        </div>
+
     </div>
+</nav>
+
+<!-- Tartalom -->
+<div class="container mt-4">
+    @yield('content')
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
