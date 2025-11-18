@@ -13,19 +13,15 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
-
-        <!-- Logo -->
         <a class="navbar-brand fw-bold" href="{{ url('/') }}">
             🎬 MoziDB
         </a>
 
-        <!-- Hamburger gomb mobilon -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Menü -->
         <div class="collapse navbar-collapse" id="navbarMenu">
             <ul class="navbar-nav ms-auto">
 
@@ -80,7 +76,6 @@
 
 </ul>
         </div>
-
     </div>
 </nav>
 
@@ -90,6 +85,4 @@
 </div>
 
 <!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">

@@ -8,10 +8,11 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->call([
-            FilmSeeder::class,
-            MoziSeeder::class,
-            EloadasSeeder::class,
-        ]);
+        // Csak egyszeri importálásra kellenek, nem minden futásnál!
+        // $this->call([
+        //     FilmSeeder::class,
+        //     MoziSeeder::class,
+        //     EloadasSeeder::class,
+        // ]);
     }
 }
