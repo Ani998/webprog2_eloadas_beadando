@@ -3,32 +3,27 @@
 @section('title', 'Bejelentkezés')
 
 @section('content')
-<div class="container mt-5" style="max-width: 420px;">
-    <h2 class="mb-4 text-center">Bejelentkezés</h2>
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            Hibás adatok!<br>
-            @foreach ($errors->all() as $error)
-                • {{ $error }} <br>
-            @endforeach
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white text-center">
+                <h4>Bejelentkezés</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" required autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Jelszó</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100">Bejelentkezés</button>
+                </form>
+            </div>
         </div>
-    @endif
-
-    <form action="{{ route('login') }}" method="POST">
-        @csrf
-
-        <div class="mb-3">
-            <label class="form-label">Email:</label>
-            <input type="email" name="email" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Jelszó:</label>
-            <input type="password" name="password" class="form-control" required>
-        </div>
-
-        <button class="btn btn-primary w-100">Bejelentkezés</button>
-    </form>
+    </div>
 </div>
 @endsection
