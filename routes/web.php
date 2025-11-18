@@ -70,13 +70,26 @@ Route::resource('filmek', \App\Http\Controllers\FilmController::class);
 ------------------------------ */
 // Route::get('/kapcsolat', [...]);
 // Route::post('/kapcsolat', [...]);
+use App\Http\Controllers\KapcsolatController;
 
+Route::get('/kapcsolat', [KapcsolatController::class, 'index'])->name('kapcsolat');
+Route::post('/kapcsolat', [KapcsolatController::class, 'kuldes'])->name('kapcsolat.kuldes');
+require __DIR__.'/auth.php';
+Route::get('/admin', function() {
+    return view('pages.admin_dashboard');
+})->middleware(['auth', 'role:admin'])->name('admin.dashboard');
 
+Route::get('/profil', function() {
+    return view('pages.user_profile');
+})->middleware(['auth', 'role:regisztrált látogató,admin'])->name('user.profile');
 /* -----------------------------
    ÜZENETEK (auth után)
 ------------------------------ */
 // Route::get('/uzenetek', [...])->middleware('auth');
-
+Route::get('/uzenetek', function() {
+    $uzenetek = DB::table('uzenetek')->orderBy('created_at', 'desc')->get();
+    return view('pages.uzenetek', ['uzenetek' => $uzenetek]);
+})->middleware(['auth', 'role:admin'])->name('uzenetek.index');
 
 /* -----------------------------
    DIAGRAM (Chart.js)

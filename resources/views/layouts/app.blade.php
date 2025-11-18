@@ -46,10 +46,39 @@
 
                 <!-- Kapcsolat -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/kapcsolat') }}">Autentikáció</a>
+                    <a class="nav-link" href="{{ url('/kapcsolat') }}">Kapcsolat</a>
                 </li>
 
+                 <!-- Autentikáció (dinamikus) -->
+    @guest
+        <!-- Ha nincs bejelentkezve -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('login') }}">Bejelentkezés</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('register') }}">Regisztráció</a>
+        </li>
+    @else
+        <!-- Ha be van jelentkezve -->
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button"
+               data-bs-toggle="dropdown">
+                {{ Auth::user()->name }}
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="dropdown-item">Kijelentkezés</button>
+                    </form>
+                </li>
             </ul>
+        </li>
+    @endguest
+
+</ul>
         </div>
 
     </div>
