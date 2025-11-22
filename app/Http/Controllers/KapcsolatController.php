@@ -12,7 +12,7 @@ class KapcsolatController extends Controller
     // űrlap megjelenítése
     public function index()
     {
-        return view('kapcsolat');
+        return view('pages.kapcsolat');
     }
 
     // űrlap elküldése
