@@ -21,7 +21,7 @@ class MoziSeeder extends Seeder
         while (($line = fgets($file)) !== false) {
             $parts = explode("\t", trim($line));
 
-            /
+            
             if (count($parts) < 4) {
                 continue;
             }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\KapcsolatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,11 +69,14 @@ Route::get('/auth', function () {
 
 require __DIR__.'/auth.php';
 /* -----------------------------
-   KAPCSOLAT (később kerül megírásra)
+   KAPCSOLAT
 ------------------------------ */
-// Route::get('/kapcsolat', [...]);
-// Route::post('/kapcsolat', [...]);
-use App\Http\Controllers\KapcsolatController;
+Route::get('/kapcsolat', [KapcsolatController::class, 'index'])
+    ->name('kapcsolat.index');
+
+Route::post('/kapcsolat', [KapcsolatController::class, 'store'])
+    ->name('kapcsolat.store');
+
 
 Route::get('/kapcsolat', [KapcsolatController::class, 'index'])->name('kapcsolat');
 Route::post('/kapcsolat', [KapcsolatController::class, 'kuldes'])->name('kapcsolat.kuldes');
@@ -88,21 +92,45 @@ Route::get('/profil', function() {
    ÜZENETEK (auth után)
 ------------------------------ */
 // Route::get('/uzenetek', [...])->middleware('auth');
-Route::get('/uzenetek', function() {
-    $uzenetek = DB::table('uzenetek')->orderBy('created_at', 'desc')->get();
-    return view('pages.uzenetek', ['uzenetek' => $uzenetek]);
-})->middleware(['auth', 'role:admin'])->name('uzenetek.index');
+Route::get('/uzenetek', function () {
+    $uzenetek = \App\Models\Uzenet::orderBy('created_at', 'desc')->get();
+    return view('pages.uzenetek', compact('uzenetek'));
+})->middleware('auth')->name('uzenetek.index');
+
+
+
+/* -----------------------------
+   ADMIN MENÜ 
+------------------------------ */
+
+
+Route::get('/admin', function () {
+    return view('pages.admin');
+})->middleware(['auth', 'role:admin'])->name('admin.index');
+
 
 /* -----------------------------
    DIAGRAM (Chart.js)
 ------------------------------ */
-// Route::get('/diagram', [...]);
+use App\Models\Eloadas;
+use App\Models\Mozi;
 
+Route::get('/diagram', function () {
+    // Bevétel mozinként összesítve
+    $adatok = Eloadas::selectRaw('moziid, SUM(bevetel) as ossz_bevetel')
+        ->groupBy('moziid')
+        ->with('mozi')
+        ->get();
 
-/* -----------------------------
-   ADMIN MENÜ (később role=admin middleware)
------------------------------- */
-// Route::get('/admin', [...]);
+    $labels = $adatok->map(fn($e) => $e->mozi->neve ?? ('Mozi #' . $e->moziid));
+    $values = $adatok->map(fn($e) => $e->ossz_bevetel);
+
+    return view('pages.diagram', [
+        'labels' => $labels,
+        'values' => $values,
+    ]);
+})->name('diagram.index');
+
 
 require __DIR__.'/settings.php'; 
 require __DIR__.'/auth.php';

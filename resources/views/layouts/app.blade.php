@@ -40,10 +40,30 @@
                     <a class="nav-link" href="{{ route('filmek.index') }}">CRUD </a>
                 </li>
 
+                <!-- Diagram -->
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('diagram.index') }}">Diagram</a>
+</li>
+
+            
                 <!-- Kapcsolat -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/kapcsolat') }}">Kapcsolat</a>
-                </li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url('/kapcsolat') }}">Kapcsolat</a>
+</li>
+
+@auth
+    <!-- Üzenetek (bejelentkezett felhasználóknak) -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('uzenetek.index') }}">Üzenetek</a>
+    </li>
+
+    @if(Auth::user()->role === 'admin')
+        <!-- Admin menü (csak adminoknak) -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.index') }}">Admin</a>
+        </li>
+    @endif
+@endauth
 
                  <!-- Autentikáció (dinamikus) -->
     @guest
