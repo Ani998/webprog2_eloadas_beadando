@@ -1,113 +1,87 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>@yield('title', 'MoziDB')</title>
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MASSIVELY THEME CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
+    <noscript><link rel="stylesheet" href="{{ asset('assets/css/noscript.css') }}" /></noscript>
 </head>
-<body>
+<body class="is-preload">
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-    <div class="container">
+    <!-- Wrapper -->
+    <div id="wrapper" class="fade-in">
 
-        <!-- LOGO -->
-        <a class="navbar-brand fw-bold" href="{{ url('/') }}">
-            🎬 MoziDB
-        </a>
+        <!-- Header -->
+        <header id="header">
+            <a href="/" class="logo">🎬 MoziDB</a>
+        </header>
 
-        <!-- MOBILE MENU BUTTON -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <!-- Nav -->
+        <nav id="nav">
+            <ul class="links">
+    <li><a href="/">Főoldal</a></li>
+    <li><a href="/eloadasok">Filmek listája</a></li>
+    <li><a href="{{ route('filmek.index') }}">CRUD</a></li>
+    <li><a href="{{ route('diagram.index') }}">Diagram</a></li>
+    <li><a href="/kapcsolat">Kapcsolat</a></li>
 
-        <!-- MENU -->
-        <div class="collapse navbar-collapse" id="navbarMenu">
-            <ul class="navbar-nav ms-auto">
+    @auth
+        <li><a href="{{ route('uzenetek.index') }}">Üzenetek</a></li>
 
-                <!-- Főoldal -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">Főoldal</a>
-                </li>
+        @if(Auth::user()->role === 'admin')
+            <li><a href="{{ route('admin.index') }}">Admin</a></li>
+        @endif
 
-                <!-- Filmek listája -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/eloadasok') }}">Filmek listája</a>
-                </li>
+        <!-- Kijelentkezés -->
+        <li>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button style="background:none;border:none;color:white;cursor:pointer;">
+                    {{ Auth::user()->name }} – Kijelentkezés
+                </button>
+            </form>
+        </li>
 
-                <!-- CRUD -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('filmek.index') }}">CRUD</a>
-                </li>
+    @else
+        <li><a href="{{ route('login') }}">Bejelentkezés</a></li>
+        <li><a href="{{ route('register') }}">Regisztráció</a></li>
+    @endguest
 
-                <!-- Diagram -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('diagram.index') }}">Diagram</a>
-                </li>
+</ul>
 
-                <!-- Kapcsolat -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/kapcsolat') }}">Kapcsolat</a>
-                </li>
+        </nav>
 
-                @auth
-                    <!-- Üzenetek -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('uzenetek.index') }}">Üzenetek</a>
-                    </li>
+        <!-- Main Content -->
+        <div id="main">
+            @yield('content')
+        </div>
 
-                    @if(Auth::user()->role === 'admin')
-                        <!-- Admin -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.index') }}">Admin</a>
-                        </li>
-                    @endif
-                @endauth
+        <!-- Footer -->
+        <footer id="footer">
+            <section>
+                <h3>MoziDB</h3>
+                <p>Készített: Ondó Vivien(O4NEQB), Trinyik Anikó (EA1HYA)</p>
+            </section>
+        </footer>
 
-                <!-- LOGIN / REGISTER vagy USER DROPDOWN -->
-                @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Bejelentkezés</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Regisztráció</a>
-                    </li>
-                @else
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-                           role="button" data-bs-toggle="dropdown">
-                            {{ Auth::user()->name }}
-                        </a>
-
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button class="dropdown-item">Kijelentkezés</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                @endguest
-
-            </ul>
+        <!-- Copyright -->
+        <div id="copyright">
+            <ul><li>&copy; MoziDB</li><li>Design: HTML5UP</li></ul>
         </div>
 
     </div>
-</nav>
 
-<!-- OLDAL TARTALOM -->
-<div class="container mt-4">
-    @yield('content')
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- MASSIVELY THEME JS -->
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.scrollex.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.scrolly.min.js') }}"></script>
+    <script src="{{ asset('assets/js/browser.min.js') }}"></script>
+    <script src="{{ asset('assets/js/breakpoints.min.js') }}"></script>
+    <script src="{{ asset('assets/js/util.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
 
 </body>
 </html>
